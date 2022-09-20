@@ -4,9 +4,8 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bryant.videoplayerdemo.data.P
-import com.bryant.videoplayerdemo.viewmodel.DataViewModel
 
-class ViewPagerAdapter(fragment: Fragment, private val viewModel: DataViewModel) :
+class ViewPagerAdapter(fragment: Fragment) :
     FragmentStateAdapter(fragment) {
 
     var dataList: List<P?> = arrayListOf()

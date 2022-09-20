@@ -13,9 +13,6 @@ import com.bryant.videoplayerdemo.extensions.TAG
 import com.bryant.videoplayerdemo.viewmodel.DataViewModel
 import timber.log.Timber
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
 class RootFragment : Fragment() {
 
     private var _binding: FragmentRootBinding? = null
@@ -42,7 +39,7 @@ class RootFragment : Fragment() {
     }
 
     private fun setViews() {
-        viewPagerAdapter = ViewPagerAdapter(this, dataViewModel)
+        viewPagerAdapter = ViewPagerAdapter(this)
         binding.viewPager.apply {
             adapter = viewPagerAdapter
             registerOnPageChangeCallback(onPageChangeCallback)
@@ -50,6 +47,29 @@ class RootFragment : Fragment() {
         dataViewModel.dataInfo.observe(viewLifecycleOwner) {
             viewPagerAdapter.dataList = it
         }
+        dataViewModel.pageAction.observe(viewLifecycleOwner) {
+            updatePage(binding.viewPager, it)
+        }
+    }
+
+    private fun updatePage(view: ViewPager2, action: String) {
+        if (action == "next") {
+            if (view.currentItem < viewPagerAdapter.itemCount) {
+                moveNext(view)
+            }
+        } else {
+            if (view.currentItem > 0) {
+                moveForward(view)
+            }
+        }
+    }
+
+    private fun moveNext(view: ViewPager2) {
+        view.currentItem = view.currentItem + 1
+    }
+
+    private fun moveForward(view: ViewPager2) {
+        view.currentItem = view.currentItem - 1
     }
 
     private val onPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {

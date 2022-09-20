@@ -7,13 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import coil.load
+import coil.size.Scale
+import coil.transform.CircleCropTransformation
 import com.bryant.videoplayerdemo.databinding.FragmentPageBinding
 import com.bryant.videoplayerdemo.extensions.AppContext
 import com.bryant.videoplayerdemo.extensions.TAG
 import com.bryant.videoplayerdemo.extensions.getIcon
 import com.bryant.videoplayerdemo.extensions.getVideo
 import com.bryant.videoplayerdemo.viewmodel.DataViewModel
-import com.bumptech.glide.Glide
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
@@ -50,8 +52,18 @@ class PageFragment : Fragment() {
             videoUrl = data.id?.getVideo
             iconUrl = (data.source?.get(2) as? List<*>)?.get(0)?.toString()?.getIcon
             iconUrl?.let {
-                Glide.with(AppContext).load(it).into(binding.ivCover)
+                binding.ivCover.load(it) {
+                    crossfade(true)
+                    transformations(CircleCropTransformation())
+                    scale(Scale.FILL)
+                }
             }
+        }
+        binding.left.setOnClickListener {
+            dataViewModel.updatePageIndex("forward")
+        }
+        binding.right.setOnClickListener {
+            dataViewModel.updatePageIndex("next")
         }
         return binding.root
     }

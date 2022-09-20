@@ -16,6 +16,12 @@ class DataViewModel(private val repository: DataRepository) : ViewModel() {
 
     private var _dataInfo = MutableLiveData<List<P?>>()
     val dataInfo: LiveData<List<P?>> = _dataInfo
+    private var _pageAction = MutableLiveData<String>()
+    val pageAction: LiveData<String> = _pageAction
+
+    fun updatePageIndex(action: String) {
+        _pageAction.value = action
+    }
 
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         Timber.e(TAG, "error: ${throwable.localizedMessage}")

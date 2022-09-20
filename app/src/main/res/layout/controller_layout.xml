@@ -10,8 +10,7 @@
         android:layout_height="3dp"
         android:layout_marginHorizontal="5dp"
         android:layout_marginTop="5dp"
-        app:buffered_color="@color/purple_200"
+        app:buffered_color="@android:color/darker_gray"
         app:played_color="@color/white"
-        app:unplayed_color="#FF03DAC5" />
-
+        app:unplayed_color="@android:color/black" />
 </LinearLayout>
